@@ -20,7 +20,7 @@ java浮点型默认为double型，所以要声明一个变量为float型时，�
 例如：double d = 88888.8;      float f = 88888.8f;  //不加f的话会报错
 
 第三类、字符类型
-char:16位，java字符使用Unicode编码，
+char:16位，java字符使用Unicode编码
         占的位数：char类型是一个单一的 16 位 Unicode 字符；
         最小值： \u0000（即为0）；
         最大值： \uffff（即为65,535）；
