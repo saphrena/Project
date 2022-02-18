@@ -1,0 +1,87 @@
+### 卖票案例的问题【理解】
+
+- 卖票出现了问题
+
+  - 相同的票出现了多次
+
+  - 出现了负数的票
+
+- 问题产生原因
+
+  线程执行的随机性导致的,可能在卖票过程中丢失cpu的执行权,导致出现问题
+
+
+### 2.3同步代码块解决数据安全问题【应用】
+
+- 安全问题出现的条件
+
+  - 是多线程环境
+
+  - 有共享数据
+
+  - 有多条语句操作共享数据
+
+- 如何解决多线程安全问题呢?
+
+  - 基本思想：让程序没有安全问题的环境
+
+- 怎么实现呢?
+
+  - 把多条语句操作共享数据的代码给锁起来，让任意时刻只能有一个线程执行即可
+
+  - Java提供了同步代码块的方式来解决
+
+- 同步代码块格式：
+synchronized(任意对象) {
+	多条语句操作共享数据的代码
+}
+
+- synchronized(任意对象)：就相当于给代码加锁了，任意对象就可以看成是一把锁
+
+- 同步的好处和弊端
+
+  - 好处：解决了多线程的数据安全问题
+
+  - 弊端：当线程很多时，因为每个线程都会去判断同步上的锁，这是很耗费资源的，无形中会降低程序的运行效率
+
+
+
+public class SellTicket implements Runnable {
+    private int tickets = 100;
+    private Object obj = new Object();
+
+    @Override
+    public void run() {
+        while (true) {
+            synchronized (obj) { // 对可能有安全问题的代码加锁,多个线程必须使用同一把锁
+                //t1进来后，就会把这段代码给锁起来
+                if (tickets > 0) {
+                    try {
+                        Thread.sleep(100);
+                        //t1休息100毫秒
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    //窗口1正在出售第100张票
+                    System.out.println(Thread.currentThread().getName() + "正在出售第" + tickets + "张票");
+                    tickets--; //tickets = 99;
+                }
+            }
+            //t1出来了，这段代码的锁就被释放了
+        }
+    }
+}
+
+public class SellTicketDemo {
+    public static void main(String[] args) {
+        SellTicket st = new SellTicket();
+
+        Thread t1 = new Thread(st, "窗口1");
+        Thread t2 = new Thread(st, "窗口2");
+        Thread t3 = new Thread(st, "窗口3");
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}

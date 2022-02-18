@@ -1,0 +1,60 @@
+**Hashtable出现的原因 :
+在集合类中HashMap是比较常用的集合对象，但是HashMap是线程不安全的(多线程环境下可能会存在问题)。
+为了保证数据的安全性我们可以使用Hashtable，但是Hashtable的效率低下。
+Hashtable采取悲观锁synchronized的形式保存数据的安全性，只要有线程访问，会将整张表全部锁起来，所以HashTable效率低下
+
+
+
+**ConcurrentHashMap出现的原因 :
+可以使用JDK1.5以后所提供的ConcurrentHashMap。
+
+**总结 :**
+
+​	1 ，HashMap是线程不安全的。多线程环境下会有数据安全问题
+
+​	2 ，Hashtable是线程安全的，但是会将整张表锁起来，效率低下
+
+​	3，ConcurrentHashMap也是线程安全的，效率较高。     在JDK7和JDK8中，底层原理不一样。
+
+
+
+
+
+
+
+
+
+import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class MyConcurrentHashMapDemo {
+    public static void main(String[] args) throws InterruptedException {
+        ConcurrentHashMap<String, String> hm = new ConcurrentHashMap<>(100);
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 25; i++) {
+                hm.put(i + "", i + "");
+            }
+        });
+
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 25; i < 51; i++) {
+                hm.put(i + "", i + "");
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        System.out.println("----------------------------");
+        //为了t1和t2能把数据全部添加完毕
+        Thread.sleep(1000);
+
+        //0-0 1-1 ..... 50- 50
+
+        for (int i = 0; i < 51; i++) {
+            System.out.println(hm.get(i + ""));
+        }//0 1 2 3 .... 50
+    }
+}

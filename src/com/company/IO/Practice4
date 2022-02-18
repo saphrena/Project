@@ -1,0 +1,33 @@
+- 介绍
+
+  Writer: 用于写入字符流的抽象父类
+
+  FileWriter: 用于写入字符流的常用子类
+
+
+- 构造方法
+
+  | 方法名                                      | 说明                                                         |
+  | ------------------------------------------- | ------------------------------------------------------------ |
+  | FileWriter(File file)                       | 根据给定的 File 对象构造一个 FileWriter 对象                 |
+  | FileWriter(File file, boolean append)       | 根据给定的 File 对象构造一个 FileWriter 对象                 |
+  | FileWriter(String fileName)                 | 根据给定的文件名构造一个 FileWriter 对象                     |
+  | FileWriter(String fileName, boolean append) | 根据给定的文件名以及指示是否附加写入数据的 boolean 值来构造 FileWriter 对象 |
+
+
+- 成员方法
+
+  | 方法名                                    | 说明                 |
+  | ----------------------------------------- | -------------------- |
+  | void   write(int c)                       | 写一个字符           |
+  | void   write(char[] cbuf)                 | 写入一个字符数组     |
+  | void write(char[] cbuf, int off, int len) | 写入字符数组的一部分 |
+  | void write(String str)                    | 写一个字符串         |
+  | void write(String str, int off, int len)  | 写一个字符串的一部分 |
+
+- 刷新和关闭的方法
+
+  | 方法名  | 说明                                                         |
+  | ------- | ------------------------------------------------------------ |
+  | flush() | 刷新流，之后还可以继续写数据                                 |
+  | close() | 关闭流，释放资源，但是在关闭之前会先刷新流。一旦关闭，就不能再写数据 |
