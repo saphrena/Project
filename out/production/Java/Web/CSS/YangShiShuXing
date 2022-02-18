@@ -1,0 +1,81 @@
+| 分类 | 属性名              | 作用         |
+| ---- | ------------------- | ------------ |
+| 边框 | **border**          | 边框         |
+|      | **border-top**      | 底部边框     |
+|      | **border-radius**   | 设置边框圆角 |
+| 文本 | **color**           | 颜色         |
+|      | **font-family**     | 字体样式     |
+|      | **font-size**       | 字体大小     |
+|      | **text-decoration** | 下划线       |
+|      | **text-align**      | 文本水平对齐 |
+|      | **line-height**     | 行高，行间距 |
+|      | **vertical-align**  | 文本垂直对齐 |
+
+
+
+border-top: 上边框
+border-left: 左边框
+border-bottom: 底边框
+border-right:  右边框
+
+
+**背景色**
+
+该[`background-color`]属性定义CSS中任何元素的背景色。
+
+背景图
+该[`background-image`]属性允许在元素的背景中显示图像。使用url函数指定图片路径。
+
+
+
+* **控制背景重复**
+
+  该[`background-repeat`]属性用于控制图像的平铺行为。可用值为：
+
+  - `no-repeat` -停止完全重复背景。
+  - `repeat-x` —水平重复。
+  - `repeat-y` —反复重复。
+  - `repeat`—默认值；双向重复。
+
+#### 轮廓
+
+轮廓**outline**：是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。
+
+#### 显示
+
+**display**属性，用来设置一个元素应如何显示。可以设置块级和行内元素的切换，也可以设置元素隐藏。
+
+**元素隐藏**
+
+当设置为none时，可以隐藏元素。
+
+
+
+
+盒子模型是通过设置**元素框**与**元素内容**和**外部元素**的边距，而进行布局的方式
+
+- element : 元素。
+
+- padding : 内边距，也有资料将其翻译为填充。
+与外边距类似，单独设置边框的内边距，设置上、右、下、左方向
+padding-top
+padding-right
+padding-bottom
+padding-left
+
+
+- border : 边框。
+
+- margin : 外边距，也有资料将其翻译为空白或空白边。
+设置上、右、下、左方向
+margin-top
+margin-right
+margin-bottom
+margin-left
+
+/*上外边距是 10px
+右外边距是 5px
+下外边距是 15px
+左外边距是 20px*/
+
+margin:10px 5px 15px 20px;

@@ -1,0 +1,75 @@
+CSS是一门基于规则的语言 — 你能定义用于你的网页中**特定元素**的一组**样式规则**。这里面提到了两个概念，一是特定元素，二是样式规则。对应CSS的语法，也就是**选择器（*selects*）**和**声明（*eclarations*）**。
+
+* **选择器**：对不同元素添加不同样式，指定将要添加样式的 HTML元素的方式。可以使用标签名，class值，id值等多种方式。
+* **声明**：形式为**属性(property):值(value)**，用于设置特定元素的属性信息。
+  * 属性：指示文体特征，例如`font-size`，`width`，`background-color`。
+  * 值：每个指定的属性都有一个值，该值指示您如何更改这些样式。
+
+## 总结
+
+1. CSS的引入方式有三种，建议使用外部样式表。
+2. 注释类似于java多行注释。
+3. 选择器是CSS的重要部分：
+   1. 基本选择器：可以通过元素，类，id来选择元素。
+   2. 属性选择器：可以通过属性值选择元素
+   3. 伪类选择器：可以指定元素的某种状态，比如链接
+   4. 组合选择器：可以组合基本选择器，更加精细的划分如何选择
+
+  格式：
+  选择器 {
+      属性名:属性值;
+      属性名:属性值;
+      属性名:属性值;
+  }
+
+
+  ## 2.1 引入方式
+
+  ### 2.1.1 内联样式
+
+  > 了解,几乎不用,维护艰难
+
+  内联样式是CSS声明在元素的`style`属性中，仅影响一个元素：
+
+  * **格式**：
+
+  ```html
+  <标签 style="属性名:属性值; 属性名:属性值;">内容</标签>
+  ```
+
+  * **举例**：
+  <h1 style="color: blue;background-color: yellow;border: 1px solid black;">
+      Hello World!
+  </h1>
+
+
+
+
+  ### 2.1.2 内部样式表
+
+  内部样式表是将CSS样式放在[`style`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/style)标签中，通常`style标签`编写在HTML 的[`head`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/head)标签内部。
+
+  * **格式**：
+  <head>
+      <style>
+          选择器 {
+              属性名: 属性值;
+              属性名: 属性值;
+          }
+      </style>
+  </head>
+
+
+
+  ### 2.1.3 外部样式表
+
+  外部样式表是CSS附加到文档中的最常见和最有用的方法，因为您可以将CSS文件链接到多个页面，从而允许您使用相同的样式表设置所有页面的样式。
+
+  外部样式表是指将CSS编写在扩展名为`.css` 的单独文件中，并从HTML`<link>` 元素引用它，通常`link标签`编写在HTML 的[`head`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/head)标签内部。：
+
+  * **格式**
+  <link rel="stylesheet" href="css文件">
+
+  rel：表示“关系 (relationship) ”，属性值指链接方式与包含它的文档之间的关系，引入css文件固定值为stylesheet。
+
+  href：属性需要引用某文件系统中的一个文件。

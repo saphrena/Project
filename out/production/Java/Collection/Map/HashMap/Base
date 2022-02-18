@@ -1,0 +1,5 @@
+### 2.1HashMap集合概述和特点【理解】
+
++ HashMap底层是哈希表结构的，是Map的实现类
++ 依赖hashCode方法和equals方法保证键的唯一，跟值没关系
++ 如果键要存储的是自定义对象，想要保证唯一性，需要重写hashCode和equals方法

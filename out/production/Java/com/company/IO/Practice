@@ -1,0 +1,32 @@
+File类练习一【应用】
++ 案例需求
+  在当前模块下的aaa文件夹中创建一个a.txt文件
+
++ 实现步骤
+  + 创建File对象,指向aaa文件夹
+  + 判断aaa文件夹是否存在,如果不存在则创建
+  + 创建File对象,指向aaa文件夹下的a.txt文件
+  + 创建这个文件
+
++ 代码实现
+
+public class Test1 {
+    public static void main(String[] args) throws IOException {
+        //练习一：在当前模块下的aaa文件夹中创建一个a.txt文件
+       /* File file = new File("filemodule\\aaa\\a.txt");
+        file.createNewFile();*/
+        //注意点:文件所在的文件夹必须要存在.
+
+      	//1.创建File对象,指向aaa文件夹
+        File file = new File("filemodule\\aaa");
+      	//2.判断aaa文件夹是否存在,如果不存在则创建
+        if(!file.exists()){
+            //如果文件夹不存在,就创建出来
+            file.mkdirs();
+        }
+      	//3.创建File对象,指向aaa文件夹下的a.txt文件
+        File newFile = new File(file,"a.txt");
+      	//4.创建这个文件
+        newFile.createNewFile();
+    }
+}

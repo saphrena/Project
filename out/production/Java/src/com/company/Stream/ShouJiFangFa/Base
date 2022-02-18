@@ -1,0 +1,16 @@
+Stream流的收集操作【应用】
+Stream流中无法直接修改集合，数组等数据源中的数据
+- 概念
+  对数据使用Stream流的方式操作完毕后,可以把流中的数据收集到集合中
+
+- 常用方法
+  | 方法名                         | 说明               |
+  | ------------------------------ | ------------------ |
+  | R collect(Collector collector) | 把结果收集到集合中 |
+
+- 工具类Collectors提供了具体的收集方式
+  | 方法名                                                       | 说明                   |
+  | ------------------------------------------------------------ | ---------------------- |
+  | public static <T> Collector toList()                         | 把元素收集到List集合中 |
+  | public static <T> Collector toSet()                          | 把元素收集到Set集合中  |
+  | public static  Collector toMap(Function keyMapper,Function  valueMapper) | 把元素收集到Map集合中  |

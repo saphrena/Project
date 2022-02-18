@@ -1,0 +1,142 @@
+- 案例需求
+
+  + 桌子类(Desk)：定义表示包子数量的变量,定义锁对象变量,定义标记桌子上有无包子的变量
+
+  + 生产者类(Cooker)：实现Runnable接口，重写run()方法，设置线程任务
+
+    1.判断是否有包子,决定当前线程是否执行
+
+    2.如果有包子,就进入等待状态,如果没有包子,继续执行,生产包子
+
+    3.生产包子之后,更新桌子上包子状态,唤醒消费者消费包子
+
+  + 消费者类(Foodie)：实现Runnable接口，重写run()方法，设置线程任务
+
+    1.判断是否有包子,决定当前线程是否执行
+
+    2.如果没有包子,就进入等待状态,如果有包子,就消费包子
+
+    3.消费包子后,更新桌子上包子状态,唤醒生产者生产包子
+
+  + 测试类(Demo)：里面有main方法，main方法中的代码步骤如下
+
+    创建生产者线程和消费者线程对象
+
+    分别开启两个线程
+
+- 代码实现
+
+
+
+
+public class Desk {
+
+    //定义一个标记
+    //true 就表示桌子上有汉堡包的,此时允许吃货执行
+    //false 就表示桌子上没有汉堡包的,此时允许厨师执行
+    public static boolean flag = false;
+
+    //汉堡包的总数量
+    public static int count = 10;
+
+    //锁对象
+    public static final Object lock = new Object();
+}
+
+public class Cooker extends Thread {
+//    生产者步骤：
+//            1，判断桌子上是否有汉堡包
+//    如果有就等待，如果没有才生产。
+//            2，把汉堡包放在桌子上。
+//            3，叫醒等待的消费者开吃。
+    @Override
+    public void run() {
+        while(true){
+            synchronized (Desk.lock){
+                if(Desk.count == 0){
+                    break;
+                }else{
+                    if(!Desk.flag){
+                        //生产
+                        System.out.println("厨师正在生产汉堡包");
+                        Desk.flag = true;
+                        Desk.lock.notifyAll();
+                    }else{
+                        try {
+                            Desk.lock.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+public class Foodie extends Thread {
+    @Override
+    public void run() {
+//        1，判断桌子上是否有汉堡包。
+//        2，如果没有就等待。
+//        3，如果有就开吃
+//        4，吃完之后，桌子上的汉堡包就没有了
+//                叫醒等待的生产者继续生产
+//        汉堡包的总数量减一
+
+        //套路:
+            //1. while(true)死循环
+            //2. synchronized 锁,锁对象要唯一
+            //3. 判断,共享数据是否结束. 结束
+            //4. 判断,共享数据是否结束. 没有结束
+        while(true){
+            synchronized (Desk.lock){
+                if(Desk.count == 0){
+                    break;
+                }else{
+                    if(Desk.flag){
+                        //有
+                        System.out.println("吃货在吃汉堡包");
+                        Desk.flag = false;
+                        Desk.lock.notifyAll();
+                        Desk.count--;
+                    }else{
+                        //没有就等待
+                        //使用什么对象当做锁,那么就必须用这个对象去调用等待和唤醒的方法.
+                        try {
+                            Desk.lock.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+public class Demo {
+    public static void main(String[] args) {
+        /*消费者步骤：
+        1，判断桌子上是否有汉堡包。
+        2，如果没有就等待。
+        3，如果有就开吃
+        4，吃完之后，桌子上的汉堡包就没有了
+                叫醒等待的生产者继续生产
+        汉堡包的总数量减一*/
+
+        /*生产者步骤：
+        1，判断桌子上是否有汉堡包
+        如果有就等待，如果没有才生产。
+        2，把汉堡包放在桌子上。
+        3，叫醒等待的消费者开吃。*/
+
+        Foodie f = new Foodie();
+        Cooker c = new Cooker();
+
+        f.start();
+        c.start();
+
+    }
+}

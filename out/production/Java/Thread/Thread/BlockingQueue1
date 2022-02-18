@@ -1,0 +1,105 @@
+### 阻塞队列实现等待唤醒机制【理解】
+
++ 案例需求
+
+  + 生产者类(Cooker)：实现Runnable接口，重写run()方法，设置线程任务
+
+    1.构造方法中接收一个阻塞队列对象
+
+    2.在run方法中循环向阻塞队列中添加包子
+
+    3.打印添加结果
+
+  + 消费者类(Foodie)：实现Runnable接口，重写run()方法，设置线程任务
+
+    1.构造方法中接收一个阻塞队列对象
+
+    2.在run方法中循环获取阻塞队列中的包子
+
+    3.打印获取结果
+
+  + 测试类(Demo)：里面有main方法，main方法中的代码步骤如下
+
+    创建阻塞队列对象
+
+    创建生产者线程和消费者线程对象,构造方法中传入阻塞队列对象
+
+    分别开启两个线程
+
+
+
+
+
+
+
+
+    public class Cooker extends Thread {
+
+        private ArrayBlockingQueue<String> bd;
+
+        public Cooker(ArrayBlockingQueue<String> bd) {
+            this.bd = bd;
+        }
+    //    生产者步骤：
+    //            1，判断桌子上是否有汉堡包
+    //    如果有就等待，如果没有才生产。
+    //            2，把汉堡包放在桌子上。
+    //            3，叫醒等待的消费者开吃。
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    bd.put("汉堡包");
+                    System.out.println("厨师放入一个汉堡包");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public class Foodie extends Thread {
+        private ArrayBlockingQueue<String> bd;
+
+        public Foodie(ArrayBlockingQueue<String> bd) {
+            this.bd = bd;
+        }
+
+        @Override
+        public void run() {
+    //        1，判断桌子上是否有汉堡包。
+    //        2，如果没有就等待。
+    //        3，如果有就开吃
+    //        4，吃完之后，桌子上的汉堡包就没有了
+    //                叫醒等待的生产者继续生产
+    //        汉堡包的总数量减一
+
+            //套路:
+            //1. while(true)死循环
+            //2. synchronized 锁,锁对象要唯一
+            //3. 判断,共享数据是否结束. 结束
+            //4. 判断,共享数据是否结束. 没有结束
+            while (true) {
+                try {
+                    String take = bd.take();
+                    System.out.println("吃货将" + take + "拿出来吃了");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    public class Demo {
+        public static void main(String[] args) {
+            ArrayBlockingQueue<String> bd = new ArrayBlockingQueue<>(1);
+
+            Foodie f = new Foodie(bd);
+            Cooker c = new Cooker(bd);
+
+            f.start();
+            c.start();
+        }
+    }

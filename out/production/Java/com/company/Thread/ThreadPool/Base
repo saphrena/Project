@@ -1,0 +1,37 @@
+
+用线程池。线程池在启动的时，会创建大量空闲线程，当我们向线程池提交任务的时，线程池就会启动一个线程来执行该任务。等待任务执行完毕以后，线程并不会死亡，而是再次返回到线程池中称为空闲状态。等待下一次任务的执行。
+
+线程池的设计思路 :
+
+1. 准备一个任务容器
+2. 一次性启动多个(2个)消费者线程
+3. 刚开始任务容器是空的，所以线程都在wait
+4. 直到一个外部线程向这个任务容器中扔了一个"任务"，就会有一个消费者线程被唤醒
+5. 这个消费者线程取出"任务"，并且执行这个任务，执行完毕后，继续等待下一次任务的到来
+
+
+
+线程池-Executors默认线程池
+
+概述 : JDK对线程池也进行了相关的实现，在真实企业开发中我们也很少去自定义线程池，而是使用JDK中自带的线程池。
+
+我们可以使用Executors中所提供的**静态**方法来创建线程池
+
+​	static ExecutorService newCachedThreadPool()   创建一个默认的线程池
+​	static newFixedThreadPool(int nThreads)	    创建一个指定最多线程数量的线程池
+
+
+线程池-Executors创建指定上限的线程池
+
+**使用Executors中所提供的静态方法来创建线程池**
+
+​	static ExecutorService newFixedThreadPool(int nThreads) : 创建一个指定最多线程数量的线程池
+
+
+
+
+### 线程池-ThreadPoolExecutor
+
+**创建线程池对象 :**
+
+ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(核心线程数量,最大线程数量,空闲线程最大存活时间,任务队列,创建线程工厂,任务的拒绝策略);

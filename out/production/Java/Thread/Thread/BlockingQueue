@@ -1,0 +1,34 @@
+阻塞队列基本使用
+
+
++ 常见BlockingQueue:
+
+  ArrayBlockingQueue: 底层是数组,有界
+
+  LinkedBlockingQueue: 底层是链表,无界.但不是真正的无界,最大为int的最大值
+
++ BlockingQueue的核心方法:
+
+  put(anObject): 将参数放入队列,如果放不进去会阻塞
+
+  take(): 取出第一个数据,取不到会阻塞
+
+
+
+
+
+  public class Demo02 {
+      public static void main(String[] args) throws Exception {
+          // 创建阻塞队列的对象,容量为 1
+          ArrayBlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(1);
+
+          // 存储元素
+          arrayBlockingQueue.put("汉堡包");
+
+          // 取元素
+          System.out.println(arrayBlockingQueue.take());
+          System.out.println(arrayBlockingQueue.take()); // 取不到会阻塞
+
+          System.out.println("程序结束了");
+      }
+  }
