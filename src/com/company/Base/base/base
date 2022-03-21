@@ -28,7 +28,6 @@ char:16位，java字符使用Unicode编码
 第四类、布尔类型
 boolean：true 真  和 false 假  默认false
 
-
 记忆方式：
         8位：Byte（字节型）
         16位：short（短整型）、char（字符型）
